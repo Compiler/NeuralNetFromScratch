@@ -1,5 +1,17 @@
+import random
 
 
+class Layer:
+
+    def __init__(self, neuron_count):
+        self.weights = []
+        for i in range(neuron_count):
+            self.weights.append(round(random.uniform(0.1, 1.0) * 2 - 1, 3))
+        print(self.weights)
+
+
+
+l = Layer(3)
 inputs= [1,2,3,2.5]
 weights=[[0.2,0.8,-0.5,1],
         [0.5, -0.91, 0.26,-0.5],
