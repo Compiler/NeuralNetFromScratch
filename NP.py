@@ -8,6 +8,10 @@ class DenseLayer:
     def forward(self, inputs):
         self.output=np.dot(inputs, self.weights)+self.biases
 
+class Activation_RectifiedLinear:
+    def forward(self, inputs):
+        self.outputs=np.maximum(0, inputs)
+
 
 inputs= [[1,2,3,2.5],
         [2,5,-1,2],
