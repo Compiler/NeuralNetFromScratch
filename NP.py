@@ -32,32 +32,18 @@ class Activation_SoftMax:
 		self.output = probabilities
 
 
-data = []
-for i in range(500):
-	data.append([math.sin(np.random.randn()), math.cos(np.random.randn()),])
-print(data)
-dense1 = DenseLayer(2, 1)
+
+num_neurons = 30
+classes = 3
+X,y = create_data(samples=100, classes=classes);
+print(X,'\n',y)
+dense1 = DenseLayer(2, num_neurons)
 act1 = Activation_RectifiedLinear()
-dense2 = DenseLayer(1, 2)
+dense2 = DenseLayer(num_neurons, classes)
 oact = Activation_SoftMax()
 
-dense1.forward(data)
+dense1.forward(X)
 act1.forward(dense1.output)
 dense2.forward(act1.output)
 oact.forward(dense2.output)
-print(oact.output)
-
-
-
-x,y = create_data(samples=100, classes=3);
-print(x,'\n',y)
-dense1 = DenseLayer(2, 3)
-act1 = Activation_RectifiedLinear()
-dense2 = DenseLayer(3, 3)
-oact = Activation_SoftMax()
-
-dense1.forward(x)
-act1.forward(dense1.output)
-dense2.forward(act1.output)
-oact.forward(dense2.output)
-print(oact.output)
+print('\n',oact.output)
