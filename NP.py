@@ -12,6 +12,7 @@ def create_data(samples, classes):
 		y[ix] = class_number
 	return X, y
 
+
 	
 class DenseLayer:
 	def __init__(self, n_inputs, n_neurons):
@@ -19,7 +20,6 @@ class DenseLayer:
 		self.biases=np.zeros((1,n_neurons))
 	def forward(self, inputs):
 		self.output = np.dot(inputs, self.weights)+self.biases
-		print(self.output)
 
 class Activation_RectifiedLinear:
 	def forward(self, inputs):
@@ -36,7 +36,6 @@ class Activation_SoftMax:
 num_neurons = 30
 classes = 3
 X,y = create_data(samples=100, classes=classes);
-print(X,'\n',y)
 dense1 = DenseLayer(2, num_neurons)
 act1 = Activation_RectifiedLinear()
 dense2 = DenseLayer(num_neurons, classes)
@@ -46,4 +45,16 @@ dense1.forward(X)
 act1.forward(dense1.output)
 dense2.forward(act1.output)
 oact.forward(dense2.output)
-print('\n',oact.output)
+
+output= oact.output
+print("Softmax output\n", output)
+
+target_output = [1,0,0]
+for item in output:
+	loss = 0;
+	log = 0
+	count = 0
+	for li in item:
+		loss += math.log(li) * target_output[count]
+		count = count+1
+	print("Loss: ", -loss)
