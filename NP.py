@@ -47,14 +47,11 @@ dense2.forward(act1.output)
 oact.forward(dense2.output)
 
 output= oact.output
-print("Softmax output\n", output)
 
-target_output = [1,0,0]
-for item in output:
-	loss = 0;
-	log = 0
-	count = 0
-	for li in item:
-		loss += math.log(li) * target_output[count]
-		count = count+1
-	print("Loss: ", -loss)
+target_output = [0,1,1]
+out = np.array([	[0.7, 0.1, 0.2],
+		[0.1, 0.5, 0.4],
+		[0.02, 0.9, 0.08]])
+
+print("loss:", -np.log(out[range(len(out)), target_output]))
+print("avg loss:", np.sum(-np.log(out[range(len(out)), target_output])) / len(out))
