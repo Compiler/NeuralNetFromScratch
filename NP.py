@@ -1,6 +1,10 @@
 import numpy as np
 import math
 
+
+
+
+
 def create_data(samples, classes):
 	X = np.zeros((samples*classes, 2))
 	y = np.zeros(samples*classes, dtype='uint8')
@@ -13,6 +17,24 @@ def create_data(samples, classes):
 	return X, y
 
 
+class Loss:
+	def calculate(self, output, y):
+		sample_losses = self.forward(output,y)
+		data_loss = np.mean(sample_losses)
+		return data_loss
+
+
+class Loss_CategoricalCrossEntropy(Loss):
+	def forward(self, y_hat, y):
+		samples = len(y_hat)
+
+		y_hat_clipped = np.clip(y_hat, 1e-7,1-1e-7)
+		if len(y.shape) == 1:
+			correctConfidences = y_hat_clipped[range(samples), y]
+		elif len(y.shape) == 2:
+			correctConfidences = np.sum(y_hat_clipped * y, axis=1)
+
+		return -np.log(correctConfidences)
 	
 class DenseLayer:
 	def __init__(self, n_inputs, n_neurons):
@@ -46,12 +68,8 @@ act1.forward(dense1.output)
 dense2.forward(act1.output)
 oact.forward(dense2.output)
 
-output= oact.output
+loss_function = Loss_CategoricalCrossEntropy()
+loss = loss_function.calculate(oact.output, y)
+print("Loss:", loss)
 
-target_output = [0,1,1]
-out = np.array([	[0.7, 0.1, 0.2],
-		[0.1, 0.5, 0.4],
-		[0.02, 0.9, 0.08]])
 
-print("loss:", -np.log(out[range(len(out)), target_output]))
-print("avg loss:", np.sum(-np.log(out[range(len(out)), target_output])) / len(out))
