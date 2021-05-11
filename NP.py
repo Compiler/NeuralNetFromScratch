@@ -72,4 +72,20 @@ loss_function = Loss_CategoricalCrossEntropy()
 loss = loss_function.calculate(oact.output, y)
 print("Loss:", loss)
 
+predictions = np.argmax(oact.output,axis=1)
+if len(y.shape) == 2:
+	y = np.argmax(y, axis=1)
+accuracy = np.mean(predictions==y)
 
+
+print("Accuracy:", accuracy)
+
+
+softmax_outputs = np.array([[0.7, 0.2, 0.1],
+					[0.5,0.1,0.4],
+					[0.02,0.9,0.08]])
+
+class_targets = np.array([0,1,1])
+
+
+		
