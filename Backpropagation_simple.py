@@ -45,10 +45,15 @@ w = [-3, -1, 2]
 b = 1.0
 
 xw = [x[0] * w[0], x[1] * w[1], x[2] * w[2]]
-print(xw)
+print(xw, ' bias =', b)
 
 z = np.sum(xw) + b
-print(z)
+print("Weights+bias:",z)
 
-y = max(z, 0) #relu
-print(y)
+activation = max(z, 0) #relu
+print("RELU Activation:", activation)
+
+drelu_dz = 1. if z > 0 else 0.
+print("Derivative of RELU:", drelu_dz)
+
+drelu_dw0 = 3
